@@ -48,7 +48,7 @@ class UserFixture extends Fixture
 
             if(in_array('ROLE_EMPLOYEE', $user->getRoles()) == true)
             {
-                for($j = 0; $j < RANDOM_INT(1, 3); $j++)
+                for($j = 0; $j < RANDOM_INT(3, 8); $j++)
                 {
                     $resume = new Resume();
                     $resume->setUser($user);
