@@ -1,8 +1,8 @@
 security:
     role_hierarchy:
-            ROLE_EMPLOYER: [ROLE_EMPLOYER]
             ROLE_ADMIN: [ROLE_ADMIN]
             ROLE_EMPLOYEE: [ROLE_EMPLOYEE]
+            ROLE_EMPLOYER: [ROLE_EMPLOYER]
 
     encoders:
         Symfony\Component\Security\Core\User\User:

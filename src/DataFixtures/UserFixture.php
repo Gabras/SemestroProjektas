@@ -2,10 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Resume;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class UserFixture extends Fixture
 {
@@ -18,35 +21,47 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // create 10 users! Bam!
-        // Example email: user-0@mail.com password: user-0
-        for ($i = 0; $i < 10; $i++) {
-            $employee = new User();
-            $employee->setFirstName('Darbuotojas-'.$i);
-            $employee->setLastName('BandymasDarbuotojas-'.$i);
-            $employee->setUsername('Darbuotojas-'.$i);
-            $employee->setPhoneNum('489465465');
-            $employee->setEmail('testasDarbuotojas-'.$i.'@mail.com');
-            $employee->setRole('ROLE_EMPLOYEE');
-            $employee->setPassword($this->passwordEncoder->encodePassword(
-                $employee,
-                '123456'
-            ));
-            $manager->persist($employee);
-            $employer = new User();
-            $employer->setFirstName('Darbdavys-'.$i);
-            $employer->setLastName('BandymasDarbdavys-'.$i);
-            $employer->setUsername('Darbdavys-'.$i);
-            $employer->setPhoneNum('489465465');
-            $employer->setEmail('testasDarbdavys-'.$i.'@mail.com');
-            $employer->setRole('ROLE_EMPLOYER');
-            $employer->setCredits(100);
-            $employer->setPassword($this->passwordEncoder->encodePassword(
-                $employer,
-                '123456'
-            ));
-            $manager->persist($employer);
+        $faker = Factory::create();
+
+        for ($i = 0; $i < 10; $i++)
+        {
+            $user = new User();
+            $user->setFirstName($faker->firstName);
+            $user->setLastName($faker->lastName);
+            $user->setEmail($faker->email);
+            $user->setPassword($this->passwordEncoder->encodePassword($user, '123456'));
+            $user->setUsername($faker->userName);
+            $user->setRole($faker->randomElement($array = array('ROLE_EMPLOYER', 'ROLE_EMPLOYEE')));
+            $user->setPhoneNum($faker->phoneNumber);
+            $user->setCredits(200);
+
+            $manager->persist($user);
             $manager->flush();
+
+            if(in_array('ROLE_EMPLOYEE', $user->getRoles()) == true)
+            {
+                for($i = 0; $i < RANDOM_INT(1, 15); $i++)
+                {
+                    $resume = new Resume();
+                    $resume->setUser($user);
+                    $resume->setArea($faker->text);
+                    $resume->setAboutYou($faker->sentence);
+                    $resume->setCreatedAt($faker->dateTime);
+                    $resume->setEducation($faker->country);
+                    $resume->setLanguages($faker->randomElements($array = array('Lithuanian', 'Russian', 'English', 'Polish'), $count = random_int(1,3)));
+                    $resume->setSalary(random_int(604, 3259));
+                    $resume->setUpdatedAt($resume->getCreatedAt());
+                    $resume->setExperience(random_int(0, 5));
+                    $resume->setIsMain(true);
+
+
+                    $manager->persist($resume);
+                    $manager->flush();
+                }
+            }
+
         }
+
     }
+
 }

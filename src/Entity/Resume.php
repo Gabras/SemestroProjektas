@@ -78,11 +78,7 @@ class Resume
      */
     private $aboutYou;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     *
-     */
-    private $usersToHide;
+
 
 
     /**
@@ -247,17 +243,6 @@ class Resume
         return $this;
     }
 
-    public function getUsersToHide(): ?array
-    {
-        return $this->usersToHide;
-    }
-
-    public function setUsersToHide(?array $usersToHide): self
-    {
-        $this->usersToHide = $usersToHide;
-
-        return $this;
-    }
 
 
 
