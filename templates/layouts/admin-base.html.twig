@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('asset/img/favicon.png') }}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-style.css') }}" >
+
+    <style>
+        .note {
+            text-align: center;
+            height: 80px;
+            background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+            color: #fff;
+            font-weight: bold;
+            line-height: 80px;
+        }
+
+        .form-content {
+            padding: 5%;
+            border: 1px solid #ced4da;
+            margin-bottom: 2%;
+        }
+
+        .btnSubmit {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 1%;
+            width: 20%;
+            cursor: pointer;
+            background: #0062cc;
+            color: #fff;
+        }
+    </style>
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% include('inc/navbar.html.twig') %}
+<div class="container-fluid">
+    <div class="row">
+        {% include('inc/sidebar-admin.html.twig') %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            {% include('inc/flash-messages.html.twig') %}
+
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

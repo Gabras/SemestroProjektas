@@ -1,0 +1,34 @@
+{% extends 'layouts/admin-base.html.twig' %}
+
+{% block title %} Vartotojų sąrašas {% endblock %}
+
+{% block body %}
+    <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('create_user') }}">Sukurti naują vartotoją</a>
+
+    {{ form_start(form, {'method': 'GET'}) }}
+    {{ form_row(form.email) }}
+    <button type="submit">Ieškoti</button>
+    {{ form_end(form) }}
+
+    {% for user in users %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="h2">{{ user.email }}</span>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('show_user', { 'id': user.id }) }}">Rodyti</a>
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('edit_user', { 'id': user.id }) }}">Redaguoti</a>
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('remove_user', { 'id': user.id }) }}">Pašalinti</a>
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('tracking_index', { 'id': user.id }) }}">Rodyti veiksmus</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if users|length < 1 %}
+        <p> Vartotojų nerasta. </p>
+    {% endif %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}

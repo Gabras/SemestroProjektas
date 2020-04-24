@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %} Paieškos sistema {% endblock %}
+
+{% block body %}
+
+    {% set count = 0 %}
+    {% for resume in resumes %}
+    {% if resume.id == resume.user.mainNum %}
+    {% set count = count + 1 %}
+    {% endif %}
+    {% endfor %}
+
+    <div class="text-center border border-light p-5">
+        <p class="h3 mb-4 text-success"> Pagal kriterijus rasta {{ count }} CV</p>
+        {{ form_start(form, {'method': 'GET'}) }}
+        <p class="h4 mb-4 text-danger"> Vieno CV peržiūros kaina 10 kreditų </p>
+        <p class="h4 mb-4">CV anketų paieška</p>
+
+        <!-- Name -->
+        <div class="form-control mb-4">
+            {{ form_row(form.area) }}
+        </div>
+        <div class="form-control mb-4">
+            {{ form_row(form.education) }}
+        </div>
+        <div class="form-control mb-4">
+            {{ form_row(form.languages) }}
+        </div>
+        <div class="form-control mb-4">
+            <label>Mokamas atlgyinimas, iki:</label>
+            {{ form_row(form.salary) }}
+        </div>
+        <div class="form-control mb-4">
+            {{ form_row(form.experience) }}
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button class="btn btn-info btn-block" type="submit">Ieškoti</button>
+        {{ form_end(form) }}
+    </div>
+
+
+    {% for resume in resumes %}
+        {% if resume.id == resume.user.mainNum %}
+            {% set count = count + 1 %}
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <span class="h2">{{ resume.area}} - sukūrė: {{ resume.user.firstName }} {{ resume.createdAt|date("m/d/Y") }}</span>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ path('showForEmployer_resume', { 'id': resume.id }) }}">Rodyti</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if resumes|length < 1 %}
+        <p> CV nerasta </p>
+    {% endif %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(resumes) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Registracija{% endblock %}
+
+{% block body %}
+    <div class="container register-form">
+        <div class="note">
+            <p>Sveiki atvykę į CV portalą</p>
+        </div>
+        {{ form_start(registrationForm) }}
+        <div class="form-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_row(registrationForm.username) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.phoneNum) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_row(registrationForm.plainPassword) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.roles) }}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btnSubmit">Registruotis</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+{% endblock %}
